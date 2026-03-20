@@ -5,10 +5,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     displayTable();
 
+    // Écouteur pour le formulaire
     document.getElementById('genea-form').addEventListener('submit', function(e) {
         e.preventDefault();
         savePerson();
     });
+
+    // --- AJOUTER CECI POUR L'IMPORT ---
+    const fileInput = document.getElementById('upload-csv');
+    if (fileInput) {
+        fileInput.addEventListener('change', importData);
+    }
 });
 
 /**
@@ -393,5 +400,64 @@ async function generateFamilyBook() {
         a.href = url;
         a.download = "Livre_Genealogique.docx";
         a.click();
+    }
+}
+
+/**
+ * IMPORTATION DES DONNÉES (JSON ou Excel)
+ */
+function importData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    const fileName = file.name.toLowerCase();
+
+    reader.onload = function(e) {
+        let importedData = [];
+
+        try {
+            if (fileName.endsWith('.json')) {
+                // Lecture JSON
+                importedData = JSON.parse(e.target.result);
+            } 
+            else if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
+                // Lecture Excel (nécessite la bibliothèque XLSX déjà utilisée pour l'export)
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                importedData = XLSX.utils.sheet_to_json(firstSheet);
+            }
+
+            if (Array.isArray(importedData)) {
+                if (confirm(`Importer ${importedData.length} ancêtres ? Cela fusionnera avec vos données actuelles.`)) {
+                    let currentData = JSON.parse(localStorage.getItem('maGenealogie') || "[]");
+                    
+                    // Fusion intelligente : on remplace si le SOSA existe, sinon on ajoute
+                    importedData.forEach(newP => {
+                        const index = currentData.findIndex(p => String(p.id) === String(newP.id));
+                        if (index !== -1) {
+                            currentData[index] = newP;
+                        } else {
+                            currentData.push(newP);
+                        }
+                    });
+
+                    localStorage.setItem('maGenealogie', JSON.stringify(currentData));
+                    displayTable();
+                    alert("✅ Importation réussie !");
+                }
+            }
+        } catch (err) {
+            alert("❌ Erreur lors de la lecture du fichier : " + err.message);
+        }
+        // Reset de l'input pour pouvoir ré-importer le même fichier si besoin
+        event.target.value = '';
+    };
+
+    if (fileName.endsWith('.json')) {
+        reader.readAsText(file);
+    } else {
+        reader.readAsArrayBuffer(file);
     }
 }
