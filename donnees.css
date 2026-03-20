@@ -1,0 +1,271 @@
+/* =========================================
+   1. BASE & STRUCTURE
+   ========================================= */
+* { box-sizing: border-box; }
+
+body.gestionnaire-page {
+    background-color: #f4f1ea;
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 0;
+    color: #4a3b28;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden; /* L'entête reste fixe, le reste scrolle */
+}
+
+/* =========================================
+   2. HEADER (ENTÊTE PRINCIPAL)
+   ========================================= */
+.main-header {
+    background-color: #fffcf5;
+    padding: 10px 25px;
+    height: 90px; /* Hauteur pour titre + stats en colonne */
+    border-bottom: 2px solid #dcd7c9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    z-index: 1000;
+    flex-shrink: 0;
+}
+
+/* Titre et Compteur (L'un sous l'autre) */
+.main-header h1 {
+    margin: 0;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1B263B;
+}
+
+#stat-count {
+    font-weight: bold;
+    color: #C5A059;
+}
+
+.main-header > span { /* Le texte "X ancêtres enregistrés" */
+    font-size: 0.85rem;
+    color: #8b7355;
+    display: block;
+}
+
+/* =========================================
+   3. BARRE DE RECHERCHE ET FILTRES (CENTRE)
+   ========================================= */
+.search-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-bar input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #dcd7c9;
+    width: 300px;
+    font-family: 'Georgia', serif;
+    outline: none;
+}
+
+.filter-container label {
+    font-size: 0.85rem;
+    margin-right: 5px;
+}
+
+.filter-container select {
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #dcd7c9;
+    background: white;
+}
+
+/* =========================================
+   4. MENU HAMBURGER & CROIX
+   ========================================= */
+.menu-toggle { display: none; }
+
+.hamburger {
+    position: relative; /* Ajouté pour que le z-index fonctionne */
+    z-index: 1100;      /* Doit être supérieur au 1050 du .menu-content */
+    cursor: pointer;
+    background: #C5A059;
+    width: 42px;
+    height: 42px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    z-index: 1100;
+}
+
+.hamburger span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: white;
+    transition: 0.4s;
+    transform-origin: center;
+}
+
+/* --- Logique de la croix (X) --- */
+.menu-toggle:checked + .hamburger span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    background: white;
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    background: white;
+}
+/* Sidebar */
+.menu-content {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100vh;
+    background: #1B263B;
+    padding: 100px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: 0.4s ease-in-out;
+    z-index: 1050;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    overflow-y: auto;
+}
+
+.menu-toggle:checked ~ .menu-content { right: 0; }
+
+.menu-label { 
+    color: #7F8C8D; 
+    font-size: 11px; 
+    text-transform: uppercase; 
+    margin: 10px 0 5px; 
+}
+
+.nav-links { list-style: none; padding: 0; margin: 0; }
+.nav-links li a, .menu-content button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #2C3E50;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    border-left: 4px solid #C5A059;
+    margin-bottom: 8px;
+}
+
+.nav-links li a:hover, .menu-content button:hover:not(.btn-danger) {
+    background: #C5A059;
+}
+
+/* BOUTON DANGER (Rouge pur) */
+.btn-danger {
+    background-color: #cc0000 !important;
+    border-left: none !important;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* =========================================
+   5. GRILLE DES FICHES DÉTAILLÉES
+   ========================================= */
+#fiches-grid {
+    flex-grow: 1;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    overflow-y: auto; /* Seule la grille scrolle */
+    background-color: #f4f1ea;
+}
+
+.fiche-detaillee {
+    background: #ffffff;
+    border: 1px solid #dcd7c9;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Bordures de genre */
+.genre-h { border-top: 8px solid #add8e6; } /* Homme */
+.genre-f { border-top: 8px solid #ffb6c1; } /* Femme */
+
+.photo-cercle {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background: #fdfaf3;
+    border: 2px solid #eee;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+}
+
+.fiche-detaillee h2 {
+    font-size: 1.2rem;
+    margin: 5px 0;
+    text-align: center;
+    color: #4a3b28;
+}
+
+.info-content {
+    width: 100%;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.empty-msg {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 100px;
+    font-style: italic;
+    color: #8b7355;
+}
+
+/* Ajustement pour que le formulaire soit scrollable sous le header fixe */
+body.gestionnaire-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+main {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #f4f1ea;
+}
+
+/* On harmonise les boutons du formulaire avec le style général */
+.btn-save {
+    background: #C5A059 !important; /* Doré comme le reste */
+    border-radius: 6px !important;
+    transition: 0.3s;
+}
+
+.btn-save:hover {
+    background: #a38345 !important;
+}

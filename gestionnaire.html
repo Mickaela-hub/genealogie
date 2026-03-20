@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Généalogie - Gestionnaire de Fiches</title>
+    
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@7.1.0/build/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <link rel="stylesheet" href="fiches_styles.css">
+</head>
+<body class="gestionnaire-page">
+
+    <header class="main-header">
+        <div class="header-left">
+            <h1>Annuaire de la Famille</h1>
+            <span class="stat-badge"><span id="stat-count">0</span> ancêtres</span>
+        </div>
+
+        <div class="search-controls">
+            <div class="search-bar">
+                <input type="text" id="search-ancetre" placeholder="🔍 Rechercher par nom, ville, métier...">
+            </div>
+            <div class="filter-container">
+                <label for="filter-gen">📍 Aller à :</label>
+                <select id="filter-gen" onchange="filterByGeneration()">
+                    <option value="all">Toutes les générations</option>
+                    <option value="1">Génération 1 (Moi)</option>
+                    <option value="2">Génération 2 (Parents)</option>
+                    <option value="3">Génération 3 (Grands-parents)</option>
+                    <option value="4">Génération 4</option>
+                    <option value="5">Génération 5</option>
+                    <option value="6">Génération 6</option>
+                    <option value="7">Génération 7</option>
+                    <option value="8">Génération 8</option>
+                    <option value="9">Génération 9</option>
+                    <option value="10">Génération 10</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="menu-area">
+            <nav class="controls">
+                <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                <label for="menu-toggle" class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+                
+                <div class="menu-content">
+                    <p class="menu-label">Navigation</p>
+                    <ul class="nav-links">
+                        <li><a href="index.html">🌳 Voir l'Arbre</a></li>
+                        <li><a href="gestionnaire.html">📇 Fiches Détaillées</a></li>
+                        <li><a href="donnees.html">✍️ Saisie & Modification</a></li>
+                    </ul>
+                    <hr class="menu-divider">
+                    <p class="menu-label">Gestion des données</p>
+                    <input type="file" id="upload-csv" accept=".xlsx, .xls, .json, .ods" style="display:none;">
+                    <button onclick="exportModelExcel()">📝 Modèle Excel</button>
+                    <button onclick="document.getElementById('upload-csv').click()">📁 Importer</button>
+                    <button onclick="generateFamilyBook()">📖 Générer le Livre</button>
+                    <button type="button" onclick="exportData()">💾 Sauvegarder (.json)</button>
+                    <button class="btn-danger" onclick="clearAll()">🗑️ Effacer tout</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="fiches-grid">
+        <div class="empty-msg">
+            <p>En attente des données...</p>
+        </div>
+    </main>
+
+    <script src="script.js"></script> 
+    <script src="gestionnaire.js"></script> 
+</body>
+</html>

@@ -1,0 +1,341 @@
+/* =========================================
+   1. VARIABLES & THÈME (Papier & Or)
+   ========================================= */
+:root {
+    --bg-papier: #f4f1ea;
+    --bg-header: #fffcf5;
+    --marron-texte: #4a3b28;
+    --or-genealogie: #C5A059;
+    --bleu-sombre: #1B263B;
+    --bleu-hover: #2C3E50;
+    --danger: #8e2a2a;
+    --ombre-douce: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* =========================================
+   2. STRUCTURE GÉNÉRALE
+   ========================================= */
+body {
+    background-color: var(--bg-papier);
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 0;
+    color: var(--marron-texte);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden; /* Priorité à l'affichage de l'arbre */
+}
+
+/* =========================================
+   3. HEADER (L'Entête Propre)
+   ========================================= */
+header {
+    background-color: var(--bg-header);
+    padding: 10px 30px;
+    height: 70px;
+    border-bottom: 3px solid var(--or-genealogie);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.header-top h1 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    font-size: 1.3em;
+    color: var(--bleu-sombre);
+}
+
+.stat-badge {
+    font-size: 0.75rem;
+    color: var(--or-genealogie);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* --- Contrôles de vue (Centre) --- */
+.view-btns-fixed {
+    display: flex;
+    gap: 8px;
+    background: rgba(74, 59, 40, 0.05);
+    padding: 6px 15px;
+    border-radius: 30px;
+    border: 1px solid #dcd7c9;
+}
+
+.btn-view {
+    background: white;
+    border: 1px solid #dcd7c9;
+    padding: 6px 10px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-view:hover {
+    background: var(--or-genealogie);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* =========================================
+   4. MENU HAMBURGER & SIDEBAR
+   ========================================= */
+
+/* Bouton Hamburger (Z-index élevé pour rester sur la croix) */
+.hamburger {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 45px;
+    height: 45px;
+    background: var(--bleu-sombre);
+    border-radius: 8px;
+    transition: 0.3s;
+    z-index: 1100;
+    position: relative;
+}
+
+.hamburger:hover {
+    background: var(--bleu-hover);
+}
+
+.hamburger span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
+    transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+/* --- Logique de la croix (X) --- */
+.menu-toggle:checked + .hamburger span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    background: var(--or-genealogie);
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    background: var(--or-genealogie);
+}
+
+/* --- Sidebar Coulissante --- */
+.menu-content {
+    position: fixed;
+    top: 0;
+    right: -320px; /* Caché par défaut */
+    width: 280px;
+    height: 100vh;
+    background: var(--bleu-sombre);
+    padding: 80px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+    overflow-y: auto;
+}
+
+.menu-toggle:checked ~ .menu-content {
+    right: 0;
+}
+
+/* Bouton "Fermer" interne optionnel */
+.close-menu-btn {
+    text-align: right;
+    color: #7F8C8D;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.close-menu-btn:hover { color: white; }
+
+/* =========================================
+   5. ÉLÉMENTS DU MENU (Boutons & Liens)
+   ========================================= */
+.nav-links { list-style: none; padding: 0; margin: 0; }
+
+.nav-links li a, .menu-content button {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    background: var(--bleu-hover);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    border-left: 4px solid var(--or-genealogie);
+    font-family: 'Georgia', serif;
+}
+
+.nav-links li a:hover, .menu-content button:hover {
+    background: var(--or-genealogie);
+    transform: translateX(5px);
+}
+
+.btn-danger {
+    background: var(--danger) !important;
+    margin-top: 20px;
+    border-left: none !important;
+}
+
+.menu-label {
+    color: #7F8C8D;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 15px 0 5px 5px;
+}
+
+.menu-divider { border: 0; border-top: 1px solid #34495E; margin: 10px 0; }
+
+.menu-toggle { display: none; }
+
+/* =========================================
+   6. ZONE DE L'ARBRE (D3.JS)
+   ========================================= */
+#tree-container {
+    flex-grow: 1;
+    width: 100%;
+    background-color: #fffcf5;
+    background-image: radial-gradient(#dcd7c9 0.6px, transparent 0.6px);
+    background-size: 30px 30px; /* Motif papier millimétré discret */
+    overflow: hidden;
+    cursor: grab;
+}
+
+#tree-container:active { cursor: grabbing; }
+
+.link {
+    fill: none;
+    stroke: #8b7355;
+    stroke-width: 1.5px;
+    opacity: 0.5;
+}
+
+.node rect {
+    fill: #fffcf5;
+    stroke: var(--marron-texte);
+    stroke-width: 2px;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.08));
+}
+
+.node:hover rect {
+    stroke: var(--or-genealogie);
+    fill: #ffffff;
+}
+
+/* Distinction SOSA 1 */
+.node.gen-G1 rect {
+    stroke: var(--or-genealogie);
+    stroke-width: 4px;
+}
+
+/* =========================================
+   AJUSTEMENT STRICT : BOUTONS DE VUE
+   ========================================= */
+
+/* Le conteneur qui centre les boutons dans le header */
+.header-section.view-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* La "capsule" qui regroupe les boutons */
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(74, 59, 40, 0.05); /* Fond très léger pour délimiter la zone */
+    padding: 4px 10px;
+    border-radius: 30px;
+    border: 1px solid #dcd7c9;
+}
+
+/* Style individuel des boutons fléchés */
+.btn-view {
+    background: #ffffff;
+    border: 1px solid #4a3b28;
+    border-radius: 50%; /* Forme bien ronde */
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+    padding: 0; /* Évite les déformations */
+}
+
+.btn-view:hover {
+    background-color: #f4f1ea;
+    transform: scale(1.1);
+}
+
+/* La petite barre de séparation entre H et V */
+.separator {
+    width: 1px;
+    height: 20px;
+    background: #dcd7c9;
+    margin: 0 5px;
+}
+
+/* =========================================
+   CORRECTIF : TITRE + BADGE DANS L'ENTÊTE
+   ========================================= */
+
+/* On force le bloc de gauche à être un bloc vertical bien rangé */
+.header-top, .logo-area {
+    display: flex !important;
+    flex-direction: column !important; /* L'un sous l'autre */
+    justify-content: center !important; /* Centré verticalement dans la barre */
+    height: 100% !important; /* Prend toute la hauteur de l'entête */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* On réduit la taille du titre pour qu'il laisse de la place au badge */
+h1 {
+    font-size: 1.2rem !important; /* Taille ajustée pour tenir avec le badge */
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.2 !important; /* Espace réduit au-dessus/en-dessous des lettres */
+    border-bottom: none !important; /* On enlève la bordure qui prend trop de place */
+}
+
+/* Le badge juste en dessous, bien serré */
+.stat-badge {
+    font-size: 0.75rem !important;
+    margin-top: 2px !important; /* Un tout petit espace sous le titre */
+    line-height: 1 !important;
+    color: #8b7355 !important;
+    display: block !important;
+}
