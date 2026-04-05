@@ -7,27 +7,27 @@ const coordsDisplay = document.getElementById('coords-display');
  */
 const positionsArbre = {
     // SOSA 1, 2, 3
-    "moi":      { x: 2011,  y: 2310 },
-    "pere":     { x: 547,  y: 446 },
-    "mere":     { x: 864,  y: 446 },
+    "moi":      { x: 2011,  y: 2315 },
+    "pere":     { x: 1011,  y: 1830 },
+    "mere":     { x: 2995,  y: 1830 },
 
     // SOSA 4, 5, 6, 7
-    "gp_pat":   { x: 315,  y: 315 }, 
-    "gm_pat":   { x: 503,  y: 315 },
-    "gp_mat":   { x: 912,  y: 315 }, 
-    "gm_mat":   { x: 1102, y: 315 },
+    "gp_pat":   { x: 517,  y: 1310 }, 
+    "gm_pat":   { x: 1509,  y: 1310 },
+    "gp_mat":   { x: 2501,  y: 1310 }, 
+    "gm_mat":   { x: 3500, y: 1310 },
 
     // SOSA 8 à 11 (Côté Père)
-    "sosa8":    { x: 184,  y: 181 }, 
-    "sosa9":    { x: 330,  y: 181 }, 
-    "sosa10":   { x: 482,  y: 181}, 
-    "sosa11":   { x: 626,  y: 181 },
+    "sosa8":    { x: 303,  y: 750 }, 
+    "sosa9":    { x: 723,  y: 750 }, 
+    "sosa10":   { x: 1300,  y: 750}, 
+    "sosa11":   { x: 1722,  y: 750 },
 
     // SOSA 12 à 15 (Côté Mère)
-    "sosa12":   { x: 781,  y: 181 }, 
-    "sosa13":   { x: 925,  y: 181 }, 
-    "sosa14":   { x: 1076, y: 181 }, 
-    "sosa15":   { x: 1223, y: 181 }
+    "sosa12":   { x: 2288,  y: 750 }, 
+    "sosa13":   { x: 2710,  y: 750 }, 
+    "sosa14":   { x: 3287, y: 750 }, 
+    "sosa15":   { x: 3710, y: 750 }
 };
 
 let imgArbre = new Image();
@@ -65,8 +65,8 @@ function genererArbre() {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        const tailleUnique = 50; 
-        const interligne = 50; // Espace entre chaque ligne
+        const tailleUnique = 45; 
+        const interligne = 45; // Espace entre chaque ligne
 
         // 1. LE NOM (En gras, tout en haut du bloc)
         ctx.font = `bold ${tailleUnique}px 'Georgia', serif`;
