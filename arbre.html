@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Générateur d'Arbre Visuel</title>
+    <link rel="stylesheet" href="arbre.css">
+</head>
+<body>
+    <header class="main-header">
+        <h1>Imprimer mon Arbre Généalogique</h1>
+        <div class="menu-area">
+            <nav class="controls">
+                <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                <label for="menu-toggle" class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+                
+                <div class="menu-content">
+                    <p class="menu-label">Navigation</p>
+                    <ul class="nav-links">
+                        <li><a href="index.html">🌳 Voir l'Arbre</a></li>
+                        <li><a href="gestionnaire.html">📇 Fiches Détaillées</a></li>
+                        <li><a href="donnees.html">✍️ Saisie & Modification</a></li>
+                        <li><a href="arbre.html">🌳Imprimer mon arbre</a></li>
+                        <li><a href="contact.html">✏️ Contact</a></li>
+                    </ul>
+                    <hr class="menu-divider">
+                    <p class="menu-label">Gestion des données</p>
+                    <input type="file" id="upload-csv" accept=".xlsx, .xls, .json, .ods" style="display:none;">
+                    <button class="btn-save" onclick="telechargerImage()">💾 Télécharger l'image</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="canvas-container">
+            <canvas id="treeCanvas"></canvas>
+        </div>
+
+        <aside class="sidebar-info">
+            <h3>Configuration</h3>
+            <p class="help-text">L'image source doit s'appeler <strong>mon_arbre.jpg</strong></p>
+            <div id="status-msg">Chargement des données...</div>
+            <hr>
+            <div class="coords-helper">
+                <h4>Aide au placement</h4>
+                <p>Cliquez sur l'image pour obtenir les coordonnées X et Y à reporter dans le script JS.</p>
+                <div id="coords-display">X: 0, Y: 0</div>
+            </div>
+        </aside>
+    </main>
+
+    <script src="arbre.js"></script>
+</body>
+</html>
