@@ -7,7 +7,7 @@ const coordsDisplay = document.getElementById('coords-display');
  */
 const positionsArbre = {
     // SOSA 1, 2, 3
-    "moi":      { x: 706,  y: 576 },
+    "moi":      { x: 2011,  y: 2310 },
     "pere":     { x: 547,  y: 446 },
     "mere":     { x: 864,  y: 446 },
 
@@ -65,8 +65,8 @@ function genererArbre() {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        const tailleUnique = 11; 
-        const interligne = 13; // Espace entre chaque ligne
+        const tailleUnique = 50; 
+        const interligne = 50; // Espace entre chaque ligne
 
         // 1. LE NOM (En gras, tout en haut du bloc)
         ctx.font = `bold ${tailleUnique}px 'Georgia', serif`;
