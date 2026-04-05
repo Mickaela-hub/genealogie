@@ -118,11 +118,17 @@ canvas.addEventListener('mousedown', (e) => {
 function telechargerImage() {
     try {
         const link = document.createElement('a');
-        link.download = 'mon_arbre_genealogique.png';
+        // Définit le nom du fichier que l'utilisateur va recevoir
+        link.download = 'mon_arbre_genealogique.png'; 
+        
+        // Transforme le canvas (fond + texte) en lien de téléchargement
         link.href = canvas.toDataURL("image/png");
+        
+        // Déclenche le téléchargement
         link.click();
     } catch (e) {
-        alert("Erreur : Le navigateur bloque l'exportation en mode local. Utilisez Live Server ou publiez sur GitHub.");
+        // Message d'erreur si le navigateur bloque (souvent en local)
+        alert("Erreur : Le navigateur bloque l'exportation. Utilisez Live Server ou publiez sur GitHub.");
     }
 }
 
