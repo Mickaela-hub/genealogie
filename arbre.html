@@ -29,6 +29,11 @@
                     <hr class="menu-divider">
                     <p class="menu-label">Gestion des données</p>
                     <input type="file" id="upload-csv" accept=".xlsx, .xls, .json, .ods" style="display:none;">
+                    <div class="style-selector">
+                        <p class="menu-label">Choisir le style :</p>
+                        <button class="btn-style" onclick="changerStyle('mon_arbre.jpg')">📜 Ancien (Parchemin)</button>
+                        <button class="btn-style" onclick="changerStyle('mon_arbre_moderne.jpg')">🏛️ Moderne (Marbre)</button>
+                    </div>
                     <button class="btn-save" onclick="telechargerImage()">💾 Télécharger l'image</button>
                 </div>
             </nav>
