@@ -1,0 +1,452 @@
+/* ==========================================================================
+   1. VARIABLES DE COULEURS & THÈME ROYAL
+   ========================================================================== */
+:root {
+    --bg-site: #fbf8f0;          /* Crème de fond super doux et lumineux */
+    --bg-carte: #ffffff;         /* Blanc pur pour les fiches et formulaires */
+    --or-royal: #d4af37;         /* L'or éclatant des titres et bordures */
+    --or-sombre: #b8902e;        /* Or plus soutenu pour les survols (hover) */
+    --marron-texte: #4a3b28;     /* Marron terre d'ombre pour une lecture noble */
+    --marron-clair: #8c765c;     /* Pour les sous-titres et éléments secondaires */
+    --beige-cadre: #f3edd7;      /* Beige pour les lignes et séparations */
+    --danger-royal: #721c24;     /* Rouge bordeaux pour les actions destructrices */
+    --ombre-douce: 0 4px 15px rgba(74, 59, 40, 0.08);
+}
+
+/* ==========================================================================
+   2. STRUCTURE GÉNÉRALE
+   ========================================================================== */
+body {
+    background-color: var(--bg-site);
+    font-family: 'Georgia', serif;
+    color: var(--marron-texte);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   3. EN-TÊTE DYNAMIQUE (Titre à gauche, Description au centre !)
+   ========================================================================== */
+.blog-header {
+    background-color: #ffffff;
+    padding: 0 40px;
+    height: 140px;
+    border-bottom: 3px solid var(--or-royal);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+/* Le conteneur se positionne à gauche, à côté de ton futur logo */
+.blog-header-title {
+    display: block; 
+    text-align: left;
+}
+
+.blog-header-title h1 {
+    font-family: 'Georgia', serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--marron-texte);
+    position: relative;
+    display: inline-block;
+}
+
+/* LA PHRASE DE DESCRIPTION : Extraite du flux pour être placée au centre absolu du site */
+.blog-header-title p {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Centre verticalement et horizontalement au milieu du header */
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--marron-clair);
+    font-style: italic;
+    letter-spacing: 2px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 520px; /* Largeur idéale pour calibrer les barres dorées */
+    pointer-events: none; /* Laisse passer les clics au centre */
+}
+
+/* Fines lignes dorées décoratives autour de la phrase centrée */
+.blog-header-title p::before,
+.blog-header-title p::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to var(--direction, right), transparent, var(--or-royal));
+}
+
+.blog-header-title p::before { --direction: right; }
+.blog-header-title p::after { --direction: left; }
+
+/* Zone du menu (Reste sagement à sa place tout à droite) */
+.menu-area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* ==========================================================================
+   4. CONTENEUR & FORMULAIRE D'ANECDOTES
+   ========================================================================== */
+.blog-container {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.form-card {
+    background: var(--bg-carte);
+    border-radius: 4px;
+    padding: 30px;
+    border-left: 4px solid var(--or-royal);
+    box-shadow: var(--ombre-douce);
+}
+
+.form-card h3 {
+    margin-top: 0;
+    color: var(--marron-texte);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--beige-cadre);
+    padding-bottom: 10px;
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 12px 0;
+    background-color: #faf9f5;
+    border: 1px solid var(--beige-cadre);
+    border-radius: 2px;
+    box-sizing: border-box;
+    font-family: 'Georgia', serif;
+    font-size: 0.95rem;
+    color: var(--marron-texte);
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--or-royal);
+    background-color: #ffffff;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.pink-btn {
+    background-color: transparent;
+    color: var(--marron-texte);
+    border: 2px solid var(--or-royal);
+    padding: 12px 28px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pink-btn:hover {
+    background-color: var(--or-royal);
+    color: white;
+}
+
+.blog-separator {
+    border: 0;
+    height: 1px;
+    background-color: var(--or-royal);
+    opacity: 0.4;
+    margin: 50px 0;
+}
+
+/* ==========================================================================
+   5. FLUX DES POSTS / ANECDOTES
+   ========================================================================== */
+.feed-title {
+    color: var(--marron-texte);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.blog-post {
+    background: var(--bg-carte);
+    border-radius: 4px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--ombre-douce);
+    border-left: 5px solid var(--or-royal);
+    transition: transform 0.2s ease;
+}
+
+.blog-post:hover {
+    transform: translateY(-2px);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--beige-cadre);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.post-tag {
+    background-color: var(--beige-cadre);
+    color: var(--marron-texte);
+    padding: 4px 10px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.post-date {
+    color: var(--marron-clair);
+    font-style: italic;
+}
+
+.post-title {
+    margin: 10px 0;
+    color: var(--marron-texte);
+    font-size: 1.4rem;
+}
+
+.post-author {
+    margin: 0 0 20px 0;
+    font-size: 0.85rem;
+    color: var(--marron-clair);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.post-content {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #3a3023;
+}
+
+.post-actions {
+    text-align: right;
+    margin-top: 20px;
+    border-top: 1px dotted var(--beige-cadre);
+    padding-top: 10px;
+}
+
+.delete-post-btn {
+    background: transparent;
+    border: none;
+    color: var(--danger-royal);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Georgia', serif;
+    font-style: italic;
+}
+
+.delete-post-btn:hover {
+    text-decoration: underline;
+}
+
+.no-post {
+    text-align: center;
+    color: var(--marron-clair);
+    font-style: italic;
+    padding: 40px;
+    background: var(--bg-carte);
+    border: 1px dashed var(--or-royal);
+}
+
+/* ==========================================================================
+   6. MENU COULISSANT (SIDEBAR) & HAMBURGER
+   ========================================================================== */
+.hamburger {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 45px;
+    height: 45px;
+    background: var(--marron-texte);
+    border-radius: 4px;
+    transition: background 0.3s;
+    z-index: 1100;
+    position: relative;
+}
+
+.hamburger:hover {
+    background: var(--marron-clair);
+}
+
+.hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #ffffff;
+    transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+    background: var(--or-royal);
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+    background: var(--or-royal);
+}
+
+.menu-content {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 280px;
+    height: 100vh;
+    background: var(--marron-texte);
+    padding: 80px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.menu-toggle:checked ~ .menu-content {
+    right: 0;
+}
+
+.nav-links { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+}
+
+.nav-links li a, .menu-content button {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    border-radius: 2px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-left: 3px solid var(--or-royal);
+    font-family: 'Georgia', serif;
+    box-sizing: border-box;
+}
+
+.nav-links li a:hover, .menu-content button:hover {
+    background: var(--or-royal);
+    color: var(--marron-texte);
+    font-weight: bold;
+    transform: translateX(5px);
+}
+
+.btn-danger {
+    background: var(--danger-royal) !important;
+    color: white !important;
+    margin-top: 20px;
+    border-left: none !important;
+}
+
+.btn-danger:hover {
+    background: #54141a !important;
+}
+
+.menu-label {
+    color: var(--or-royal);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 15px 0 5px 5px;
+    font-weight: bold;
+}
+
+.menu-divider { 
+    border: 0; 
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+    margin: 15px 0; 
+}
+
+.menu-toggle { 
+    display: none; 
+}
+
+/* ==========================================================================
+   7. EFFET DE RATURE ET CORRECTION (Calé sous le titre)
+   ========================================================================== */
+.word-scratch {
+    position: relative;
+    color: var(--marron-clair);
+    text-decoration: line-through;
+    text-decoration-color: var(--danger-royal);
+    text-decoration-thickness: 3px;
+}
+
+.word-scratch::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background-color: var(--danger-royal);
+    transform: rotate(-3deg);
+}
+
+/* Le mot SOUVENIRS reste attaché à son titre à gauche */
+.word-correction {
+    position: absolute;
+    left: 20%;
+    top: 32px; /* Reste sous le titre sans descendre sur le reste de la page */
+    font-family: 'Caveat', 'Comic Sans MS', cursive;
+    font-size: 1.6rem;
+    color: var(--or-royal);
+    text-transform: none;
+    letter-spacing: 0px;
+    transform: rotate(-4deg);
+    font-style: normal;
+    white-space: nowrap;
+}
