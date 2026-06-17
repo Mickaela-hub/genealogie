@@ -143,8 +143,6 @@ function filterByGeneration() {
  * Redirection vers la page de saisie pour modifier un ancêtre
  */
 function allerModifier(id) {
-    // On peut imaginer stocker l'ID à modifier dans le sessionStorage 
-    // pour que donnees.html l'ouvre automatiquement
-    sessionStorage.setItem('editSosaId', id);
-    window.location.href = "donnees.html";
+    // Cela va rediriger l'utilisateur vers : donnees.html?sosa=15
+    window.location.href = `donnees.html?sosa=${id}`;
 }

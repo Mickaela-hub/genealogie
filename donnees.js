@@ -9,6 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         savePerson();
     });
+
+    // ÉCOUTEUR D'URL : On regarde si un numéro SOSA est présent dans l'adresse
+    const urlParams = new URLSearchParams(window.location.search);
+    const sosaParam = urlParams.get('sosa');
+    
+    if (sosaParam) {
+        // Appelle la fonction locale de donnees.js pour charger la fiche dans le formulaire
+        editPerson(sosaParam);
+    }
 });
 
 /**

@@ -14,6 +14,9 @@ function changerStyle(nomFichier) {
 imgArbre.onload = () => {
     canvas.width = imgArbre.width;
     canvas.height = imgArbre.height;
+    
+    // Initialisation du sélecteur au premier chargement de l'image
+    initialiserSelectRacine();
     genererArbre(); 
 };
 
@@ -40,6 +43,38 @@ const positionsArbre = {
     "sosa14":   { x: 3287,  y: 750 }, 
     "sosa15":   { x: 3710,  y: 750 }
 };
+
+// --- 1B. GESTION DYNAMIQUE DE LA RACINE ---
+let idRacineSelectionnee = "1"; // Par défaut, l'individu avec l'ID "1"
+
+function initialiserSelectRacine() {
+    const data = JSON.parse(localStorage.getItem('maGenealogie') || "[]");
+    const select = document.getElementById('select-racine');
+    
+    if (!select || data.length === 0) return;
+    
+    // On vide le sélecteur pour éviter les doublons
+    select.innerHTML = "";
+    
+    // On trie les individus par ID ou par nom pour que ce soit plus lisible
+    data.sort((a, b) => Number(a.id) - Number(b.id));
+    
+    data.forEach(perso => {
+        const option = document.createElement('option');
+        option.value = perso.id;
+        option.text = `[SOSA ${perso.id}] ${perso.nom.toUpperCase()} ${perso.prenom}`;
+        if (String(perso.id) === String(idRacineSelectionnee)) {
+            option.selected = true;
+        }
+        select.appendChild(option);
+    });
+    
+    // Événement lors du changement de racine
+    select.onchange = (e) => {
+        idRacineSelectionnee = e.target.value;
+        genererArbre();
+    };
+}
 
 // --- 2. FONCTION DE DESSIN ---
 function genererArbre() {
@@ -81,19 +116,32 @@ function genererArbre() {
         }
     };
 
-    // Mapping des SOSA
-    Object.keys(positionsArbre).forEach((key, index) => {
-        // Cette boucle dessine automatiquement tout ce qui est dans positionsArbre
-        // en cherchant l'ID correspondant (1, 2, 3... jusqu'à 15)
-        const sosaId = (key === "moi") ? "1" : 
-                       (key === "pere") ? "2" : 
-                       (key === "mere") ? "3" : 
-                       (key === "gp_pat") ? "4" : 
-                       (key === "gm_pat") ? "5" : 
-                       (key === "gp_mat") ? "6" : 
-                       (key === "gm_mat") ? "7" : key.replace("sosa", "");
-        
-        dessinerIndividu(key, sosaId);
+    // Base mathématique de la racine choisie
+    const R = Number(idRacineSelectionnee);
+
+    // Calcul mathématique des correspondances de SOSA basées sur la racine choisie R
+    const sosaMapping = {
+        "moi":     R,
+        "pere":    2 * R,
+        "mere":    2 * R + 1,
+        "gp_pat":  4 * R,
+        "gm_pat":  4 * R + 1,
+        "gp_mat":  4 * R + 2,
+        "gm_mat":  4 * R + 3,
+        "sosa8":   8 * R,
+        "sosa9":   8 * R + 1,
+        "sosa10":  8 * R + 2,
+        "sosa11":  8 * R + 3,
+        "sosa12":  8 * R + 4,
+        "sosa13":  8 * R + 5,
+        "sosa14":  8 * R + 6,
+        "sosa15":  8 * R + 7
+    };
+
+    // Parcours et dessin automatique selon le nouveau mapping
+    Object.keys(positionsArbre).forEach((key) => {
+        const sosaIdCalculé = String(sosaMapping[key]);
+        dessinerIndividu(key, sosaIdCalculé);
     });
 
     const status = document.getElementById('status-msg');
